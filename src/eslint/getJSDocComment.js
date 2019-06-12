@@ -63,6 +63,7 @@ const getJSDocComment = function (sourceCode, node) {
 
   switch (node.type) {
   case 'ClassDeclaration':
+  case 'VariableDeclaration':
   case 'FunctionDeclaration':
     return findJSDocComment(looksLikeExport(parent) ? parent : node);
 

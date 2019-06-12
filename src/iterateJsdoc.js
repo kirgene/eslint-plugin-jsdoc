@@ -430,7 +430,9 @@ export default (iterator, opts = {}) => {
       return {
         ArrowFunctionExpression: checkJsdoc,
         FunctionDeclaration: checkJsdoc,
-        FunctionExpression: checkJsdoc
+        FunctionExpression: checkJsdoc,
+        VariableDeclarationInFunction: checkJsdoc,
+        VariableDeclarationInModule: checkJsdoc
       };
     },
     meta: opts.meta

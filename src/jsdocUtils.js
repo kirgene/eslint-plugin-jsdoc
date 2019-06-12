@@ -240,7 +240,8 @@ const STATEMENTS_WITH_CHILDREN = [
 ];
 
 const RETURNFREE_STATEMENTS = [
-  'VariableDeclaration',
+  'VariableDeclarationInFunction',
+  'VariableDeclarationInModule',
   'ThrowStatement',
   'FunctionDeclaration',
   'BreakStatement',

@@ -28,6 +28,14 @@ const OPTIONS_SCHEMA = {
         MethodDefinition: {
           default: false,
           type: 'boolean'
+        },
+        VariableDeclarationInFunction: {
+          default: false,
+          type: 'boolean'
+        },
+        VariableDeclarationInModule: {
+          default: false,
+          type: 'boolean'
         }
       },
       type: 'object'
@@ -58,7 +66,9 @@ const getOptions = (context) => {
     ClassDeclaration: getOption(context, 'ClassDeclaration'),
     FunctionDeclaration: getOption(context, 'FunctionDeclaration'),
     FunctionExpression: getOption(context, 'FunctionExpression'),
-    MethodDefinition: getOption(context, 'MethodDefinition')
+    MethodDefinition: getOption(context, 'MethodDefinition'),
+    VariableDeclarationInFunction: getOption(context, 'VariableDeclarationInFunction'),
+    VariableDeclarationInModule: getOption(context, 'VariableDeclarationInModule')
   };
 };
 
@@ -152,6 +162,22 @@ export default iterateJsdoc(null, {
         if (node.parent.type === 'Property' && node === node.parent.value) {
           checkJsDoc(node);
         }
+      },
+
+      VariableDeclaration (node) {
+        // console.log('VariableDeclaration = ', node);
+
+        if (node.parent.type === 'Program' && !options.VariableDeclarationInModule) {
+          return;
+        }
+
+        if (node.parent.type === 'BlockStatement' &&
+          node.parent.parent.type === 'FunctionDeclaration' &&
+          !options.VariableDeclarationInFunction) {
+          return;
+        }
+
+        checkJsDoc(node);
       }
     };
   }
